@@ -7,8 +7,6 @@
 # you're doing.
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "ubuntu/trusty32"
-
   config.vm.network "forwarded_port", guest: 80, host: 19679
 
   # config.vm.provision :ansible do |ansible|
