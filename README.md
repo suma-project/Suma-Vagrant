@@ -6,8 +6,8 @@ This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used 
 
 1. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html).
 2. Clone or Download this repository.
-3. Run "vagrant up" from the suma-vagrant directory.
-4. Visit [http://localhost:8080](http://localhost:8080) in your web browser.
+3. From a terminal application, type `vagrant up` from the Suma-Vagrant directory and hit the `Return` key.
+4. Visit [http://localhost:19679](http://localhost:19679) in your web browser.
 
 ## Admin Tools
 
