@@ -21,10 +21,47 @@
       apt: name=php5-mysql state=present
     - name: install libapache2-mod-auth-mysql
       apt: name=libapache2-mod-auth-mysql
+    - name: Latest version of Ruby is installed
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - ruby2.0
+        - ruby2.0-dev
+
+    - name: Symlink exists for Ruby 2.0
+      file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
+
+    - name: Symlink exists for Ruby Gems 2.0
+      file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
+    - name: install bundler
+      command: gem install bundler
+    - name: install phpunit
+      apt: name=phpunit
+    - name: install node
+      apt: name=nodejs
+    - name: symlink node
+      command: ln -s /usr/bin/nodejs /usr/bin/node
+    - name: install npm
+      apt: name=npm
+    - name: install grunt-cli
+      command: npm install -g grunt-cli
+    - name: install npm-install-missing
+      command: npm install -g npm-install-missing
+    - name: install bower
+      command: npm install -g bower
 
     # Clone Suma repo
     - name: clone suma
       git: repo=https://github.com/cazzerson/Suma.git dest=/opt/suma accept_hostkey=yes
+
+    # Install Suma dependencies
+    - name: install suma npm packages
+      command: npm install
+      args:
+        chdir: /opt/suma/analysis/
+    - name: install compass
+      command: bundle install
+      args:
+        chdir: /opt/suma/analysis
 
     # Create and populate DB
     - name: create mysql db
