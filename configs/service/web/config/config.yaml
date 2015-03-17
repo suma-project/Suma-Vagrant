@@ -13,8 +13,8 @@
 #  to see more verbose error messages. This should generally be set to `false`.
 
 # Path Configuration
-SUMA_SERVER_PATH: /opt/suma/service
-SUMA_CONTROLLER_PATH: /opt/suma/service/controllers
+SUMA_SERVER_PATH: /vagrant/suma/service
+SUMA_CONTROLLER_PATH: /vagrant/suma/service/controllers
 SUMA_BASE_URL: /sumaserver
 
 # Debug mode

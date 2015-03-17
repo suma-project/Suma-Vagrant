@@ -21,16 +21,14 @@
       apt: name=php5-mysql state=present
     - name: install libapache2-mod-auth-mysql
       apt: name=libapache2-mod-auth-mysql
-    - name: Latest version of Ruby is installed
+    - name: install Ruby
       apt: pkg={{ item }} state=latest
       with_items:
         - ruby2.0
         - ruby2.0-dev
-
-    - name: Symlink exists for Ruby 2.0
+    - name: create symlink for Ruby
       file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
-
-    - name: Symlink exists for Ruby Gems 2.0
+    - name: create symlink for Ruby gems
       file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
     - name: install bundler
       command: gem install bundler
@@ -51,51 +49,42 @@
 
     # Clone Suma repo
     - name: clone suma
-      git: repo=https://github.com/cazzerson/Suma.git dest=/opt/suma accept_hostkey=yes
-
-    # Install Suma dependencies
-    - name: install suma npm packages
-      command: npm install
-      args:
-        chdir: /opt/suma/analysis/
-    - name: install compass
-      command: bundle install
-      args:
-        chdir: /opt/suma/analysis
+      git: repo=https://github.com/cazzerson/Suma.git dest=/vagrant/suma accept_hostkey=yes
+      tags: suma
 
     # Create and populate DB
     - name: create mysql db
       mysql_db: name=suma state=present
     - name: populate mysql db
-      mysql_db: name=suma state=import target=/opt/suma/service/config/schema_w_sample.sql
+      mysql_db: name=suma state=import target=/vagrant/suma/service/config/schema_w_sample.sql
     - name: create db user
       mysql_user: name=suma password=12345 priv=*.*:ALL state=present
 
     # Suma symlinks
     - name: create sumaserver symlink
-      file: src=/opt/suma/service/web/ dest=/var/www/html/sumaserver state=link
+      file: src=/vagrant/suma/service/web/ dest=/var/www/html/sumaserver state=link
     - name: create suma web directory
       file: path=/var/www/html/suma/ state=directory
     - name: create suma client symlink
-      file: src=/opt/suma/web/ dest=/var/www/html/suma/client state=link
+      file: src=/vagrant/suma/web/ dest=/var/www/html/suma/client state=link
     - name: create suma analysis symlink
-      file: src=/opt/suma/analysis/ dest=/var/www/html/suma/analysis state=link
+      file: src=/vagrant/suma/analysis/ dest=/var/www/html/suma/analysis state=link
 
     # Suma configs
     - name: link service config
-      copy: src=configs/service/config/config.yaml dest=/opt/suma/service/config/config.yaml
+      copy: src=configs/service/config/config.yaml dest=/vagrant/suma/service/config/config.yaml
     - name: link service/web config
-      copy: src=configs/service/web/config/config.yaml dest=/opt/suma/service/web/config/config.yaml
+      copy: src=configs/service/web/config/config.yaml dest=/vagrant/suma/service/web/config/config.yaml
     - name: link analysis config
-      copy: src=configs/analysis/config/config.yaml dest=/opt/suma/analysis/config/config.yaml
+      copy: src=configs/analysis/config/config.yaml dest=/vagrant/suma/analysis/config/config.yaml
     - name: link client config
-      copy: src=configs/web/config/spaceassessConfig.js dest=/opt/suma/web/config/spaceassessConfig.js
+      copy: src=configs/web/config/spaceassessConfig.js dest=/vagrant/suma/web/config/spaceassessConfig.js
 
     # Suma logs
     - name: create suma log directory
-      file: path=/opt/suma/sumalogs/ state=directory
+      file: path=/vagrant/suma/sumalogs/ state=directory
     - name: create suma log file
-      file: path=/opt/suma/sumalogs/sumaserver.log state=touch mode="u=rw,g=rw,o=rw"
+      file: path=/vagrant/suma/sumalogs/sumaserver.log state=touch mode="u=rw,g=rw,o=rw"
 
     # Apache config
     - name: copy apache2.conf
@@ -104,6 +93,21 @@
       command: a2enmod rewrite
     - name: restart apache
       service: name=apache2 state=restarted
+      tags: apacherestart
+
+    # Prepare development environment
+    - name: install suma npm packages
+      command: npm install
+      args:
+        chdir: /vagrant/suma/analysis/
+    - name: install compass
+      command: bundle install
+      args:
+        chdir: /vagrant/suma/analysis
+    - name: prepare development environment
+      command: grunt prepareDevEnv
+      args:
+        chdir: /vagrant/suma/analysis/
 
     # Index.html
     - name: copy index.html

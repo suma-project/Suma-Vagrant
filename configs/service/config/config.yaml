@@ -27,7 +27,7 @@ production:
             pword: 12345
             port: 3306
         log:
-            path: /opt/suma/sumalogs/
+            path: /vagrant/suma/sumalogs/
             name: sumaserver.log
         admin:
             user: sumaadmin
