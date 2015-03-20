@@ -1,0 +1,50 @@
+# Install development dependencies
+- name: install Ruby
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - ruby2.0
+    - ruby2.0-dev
+
+- name: create symlink for Ruby
+  file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
+
+- name: create symlink for Ruby gems
+  file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
+
+- name: install bundler
+  command: gem install bundler
+
+- name: install phpunit
+  apt: name=phpunit
+
+- name: install node
+  apt: name=nodejs
+
+- name: symlink node
+  command: ln -s /usr/bin/nodejs /usr/bin/node
+
+- name: install npm
+  apt: name=npm
+
+- name: install grunt-cli
+  command: npm install -g grunt-cli
+
+- name: install bower
+  command: npm install -g bower
+
+# Prepare development environment
+- name: install suma npm packages
+  command: npm install
+  args:
+    chdir: /vagrant/suma/analysis/
+  tags: npm-install
+
+- name: install compass
+  command: bundle install
+  args:
+    chdir: /vagrant/suma/analysis
+
+- name: prepare development environment
+  command: grunt prepareDevEnv
+  args:
+    chdir: /vagrant/suma/analysis/

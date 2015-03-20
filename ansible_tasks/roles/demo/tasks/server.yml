@@ -1,0 +1,27 @@
+---
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: install apache
+  apt: name=apache2 state=present
+
+- name: install mysql
+  apt: name=mysql-server state=present
+
+- name: install MySQLdb Python
+  apt: name=python-mysqldb state=present
+
+- name: install php
+  apt: name=php5 state=present
+
+- name: install git
+  apt: name=git state=present
+
+- name: install php5-curl
+  apt: name=php5-curl state=present
+
+- name: install php5-mysql
+  apt: name=php5-mysql state=present
+
+- name: install libapache2-mod-auth-mysql
+  apt: name=libapache2-mod-auth-mysql

@@ -1,0 +1,63 @@
+---
+# Clone Suma repo
+- name: clone suma
+  git: repo=https://github.com/cazzerson/Suma.git dest=/vagrant/suma accept_hostkey=yes
+  tags: suma
+
+# Create and populate DB
+- name: create mysql db
+  mysql_db: name=suma state=present
+
+- name: populate mysql db
+  mysql_db: name=suma state=import target=/vagrant/suma/service/config/schema_w_sample.sql
+
+- name: create db user
+  mysql_user: name=suma password=12345 priv=*.*:ALL state=present
+
+# Suma symlinks
+- name: create sumaserver symlink
+  file: src=/vagrant/suma/service/web/ dest=/var/www/html/sumaserver state=link
+
+- name: create suma web directory
+  file: path=/var/www/html/suma/ state=directory
+
+- name: create suma client symlink
+  file: src=/vagrant/suma/web/ dest=/var/www/html/suma/client state=link
+
+- name: create suma analysis symlink
+  file: src=/vagrant/suma/analysis/ dest=/var/www/html/suma/analysis state=link
+
+# Suma configs
+- name: link service config
+  copy: src=/vagrant/configs/service/config/config.yaml dest=/vagrant/suma/service/config/config.yaml
+
+- name: link service/web config
+  copy: src=/vagrant/configs/service/web/config/config.yaml dest=/vagrant/suma/service/web/config/config.yaml
+
+- name: link analysis config
+  copy: src=/vagrant/configs/analysis/config/config.yaml dest=/vagrant/suma/analysis/config/config.yaml
+
+- name: link client config
+  copy: src=/vagrant/configs/web/config/spaceassessConfig.js dest=/vagrant/suma/web/config/spaceassessConfig.js
+
+# Suma logs
+- name: create suma log directory
+  file: path=/vagrant/suma/sumalogs/ state=directory
+
+- name: create suma log file
+  file: path=/vagrant/suma/sumalogs/sumaserver.log state=touch mode="u=rw,g=rw,o=rw"
+
+# Apache config
+- name: copy apache2.conf
+  copy: src=/vagrant/configs/apache2.conf dest=/etc/apache2/
+
+- name: enable mod_rewrite
+  command: a2enmod rewrite
+
+- name: restart apache
+  service: name=apache2 state=restarted
+  tags: apacherestart
+
+# Index.html
+- name: copy index.html
+  copy: src=/vagrant/configs/index.html dest=/var/www/html
