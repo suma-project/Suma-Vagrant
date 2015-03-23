@@ -1,0 +1,10 @@
+# Apache config
+- name: copy apache2.conf
+  copy: src=/vagrant/configs/apache2.conf dest=/etc/apache2/
+
+- name: enable mod_rewrite
+  command: a2enmod rewrite
+
+- name: restart apache
+  service: name=apache2 state=restarted
+  tags: apacherestart
