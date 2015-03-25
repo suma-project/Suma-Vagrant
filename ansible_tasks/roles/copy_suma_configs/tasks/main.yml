@@ -9,4 +9,4 @@
   copy: src=/vagrant/configs/analysis/config/config.yaml dest=/vagrant/suma/analysis/config/config.yaml
 
 - name: link client config
-  copy: src=/vagrant/configs/web/config/spaceassessConfig.js dest=/vagrant/suma/web/config/spaceassessConfig.js`
+  copy: src=/vagrant/configs/web/config/spaceassessConfig.js dest=/vagrant/suma/web/config/spaceassessConfig.js
