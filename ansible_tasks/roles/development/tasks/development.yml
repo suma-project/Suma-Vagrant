@@ -19,7 +19,7 @@
   tags: apacherestart
 
 - name: cron job for xdebug logs
-  cron: name="remove cachegrind files" user="vagrant" day="*" hour="8" job="rm /tmp/cachegrind.*"
+  cron: name="remove cachegrind files" minute="15" job="cd /tmp && rm cachegrind.*"
 
 - name: install webgrind
   git: repo=https://github.com/jokkedk/webgrind.git dest=/var/www/html/webgrind accept_hostkey=yes
