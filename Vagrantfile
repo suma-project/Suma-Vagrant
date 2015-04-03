@@ -1,6 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Install required plugins
+# see http://stackoverflow.com/a/28801317
+required_plugins = %w(vagrant-timezone)
+
+required_plugins.each do |plugin|
+  need_restart = false
+  unless Vagrant.has_plugin? plugin
+    system "vagrant plugin install #{plugin}"
+    need_restart = true
+  end
+  exec "vagrant #{ARGV.join(' ')}" if need_restart
+end
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -9,9 +22,20 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", guest: 80, host: 19679
 
-  # config.vm.provision :ansible do |ansible|
-  #   ansible.playbook = "playbook.yml"
-  # end
+  # Host platform detection
+  if RUBY_PLATFORM["darwin"]
+    time_zone=`sudo systemsetup -gettimezone|cut -d':' -f2| tr -d '[[:space:]]'`
+  elsif RUBY_PLATFORM["linux"]
+    time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
+  else
+    # FIXME: Handle windows
+    # time_zone=`tzutil /g`
+  end
+
+  # Setting timezone
+  if Vagrant.has_plugin?("vagrant-timezone")
+    config.timezone.value = time_zone
+  end
 
   config.vm.provision :shell,
     :keep_color => true,
