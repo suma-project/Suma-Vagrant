@@ -9,6 +9,9 @@ This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used 
 3. From a terminal application, type `vagrant up` from the Suma-Vagrant directory and hit the `Return` key.
 4. Visit [http://localhost:19679](http://localhost:19679) in your web browser.
 
+> Parallels is also a supported provider, and can be selected
+by executing `vagrant up --provider=parallels` in step 3 above.
+
 ## Configuration
 
 To modify your Suma configuration, just edit the files in the `config` directory.
