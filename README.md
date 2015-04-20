@@ -18,7 +18,7 @@ To modify your Suma configuration, just edit the files in the `config` directory
 
 ## Shutdown
 
-To suspend your virtual machine, just type `vagrant down` from the `Suma-Vagrant` directory. You can start it back up again with `vagrant up`.
+To suspend your virtual machine, just type `vagrant suspend` from the `Suma-Vagrant` directory. To shut the machine down, type `vagrant halt`. You can start it back up again with `vagrant up`.
 
 ## Admin Tools
 
