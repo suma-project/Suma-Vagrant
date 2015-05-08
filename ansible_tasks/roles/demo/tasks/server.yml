@@ -96,13 +96,12 @@
     --with-gettext \
     --enable-gd-native-ttf \
     --with-t1lib=/usr \
-    --with-freetype-dir=/usr \
-    --prefix=/opt/PHP-5.3 \
-    --with-config-file-path=/opt/PHP-5.3/etc
+    --with-freetype-dir=/usr
+    --with-config-file-path=/etc/php5/apache2/php.ini
   args:
     chdir: /opt/build/php-5.3.29/
 
-- name: build php
+- name: build php (this may take a while)
   command: make
   args:
     chdir: /opt/build/php-5.3.29/

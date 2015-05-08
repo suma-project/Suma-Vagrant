@@ -2,6 +2,15 @@
 - name: copy apache2.conf
   copy: src=/vagrant/configs/apache2.conf dest=/etc/apache2/
 
+- name: create build dir
+  file: path=/etc/php5/apache2/ state=directory
+
+- name: copy php.ini
+  copy: src=/vagrant/configs/php.ini dest=/etc/php5/apache2/ mode=0644
+
+- name: source php.ini for php-cli
+  lineinfile: dest=/etc/profile line="export PHPRC=/etc/php5/apache2/php.ini"
+
 - name: disable mpm_event
   command: a2dismod mpm_event
 

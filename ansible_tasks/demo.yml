@@ -5,3 +5,7 @@
     - demo
     - copy_apache_configs
     - copy_suma_configs
+    - { role: postfix,
+        postfix_domain: 'example.com',
+        postfix_notify_email: 'nobody@example.com'
+      }
