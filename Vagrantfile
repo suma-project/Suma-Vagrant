@@ -28,8 +28,8 @@ Vagrant.configure(2) do |config|
   elsif RUBY_PLATFORM["linux"]
     time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
   else
-    # FIXME: Handle windows
-    # time_zone=`tzutil /g`
+    hostOs="Windows"
+    TimeZone=`tzutil /g`
   end
 
   # Setting timezone
