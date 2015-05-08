@@ -6,7 +6,7 @@ This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used 
 
 1. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html).
 2. Clone or Download this repository.
-3. From a terminal application, type `vagrant up` from the Suma-Vagrant directory and hit the `Return` key.
+3. From a terminal application, type `vagrant up` from the Suma-Vagrant directory and hit the `Return` key. Note: If you are on OSX, you may need to enter your administrator password. This is so the timezone of the virtual machine (guest) may be configured to match that of the host.
 4. Visit [http://localhost:19679](http://localhost:19679) in your web browser.
 
 > Parallels is also a supported provider, and can be selected
