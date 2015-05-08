@@ -2,6 +2,12 @@
 - name: copy apache2.conf
   copy: src=/vagrant/configs/apache2.conf dest=/etc/apache2/
 
+- name: disable mpm_event
+  command: a2dismod mpm_event
+
+- name: enable mpm_prefork
+  command: a2enmod mpm_prefork
+
 - name: enable mod_rewrite
   command: a2enmod rewrite
 
