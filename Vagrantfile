@@ -22,21 +22,6 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", guest: 80, host: 19679
 
-  # Host platform detection
-  if RUBY_PLATFORM["darwin"]
-    time_zone=`sudo systemsetup -gettimezone|cut -d':' -f2| tr -d '[[:space:]]'`
-  elsif RUBY_PLATFORM["linux"]
-    time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
-  else
-    hostOs="Windows"
-    TimeZone=`tzutil /g`
-  end
-
-  # Setting timezone
-  if Vagrant.has_plugin?("vagrant-timezone")
-    config.timezone.value = time_zone
-  end
-
   config.vm.provision :shell,
     :keep_color => true,
     :inline => "export PYTHONUNBUFFERED=1 && export ANSIBLE_FORCE_COLOR=1 && cd /vagrant && chmod u+x init.sh && ./init.sh"
@@ -75,7 +60,11 @@ Vagrant.configure(2) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder "suma/", "/vagrant/suma", create: true
+  if RUBY_PLATFORM["darwin"] || RUBY_PLATFORM["linux"]
+    config.vm.synced_folder "suma/", "/vagrant/suma", create: true
+  else
+    config.vm.synced_folder "suma/", "/vagrant/suma", create: true, type: "smb"
+  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -109,4 +98,19 @@ Vagrant.configure(2) do |config|
   # config.vm.provision "shell", inline <<-SHELL
   #   sudo apt-get install apache2
   # SHELL
+
+  # Host platform detection
+  if RUBY_PLATFORM["darwin"]
+    time_zone=`sudo systemsetup -gettimezone|cut -d':' -f2| tr -d '[[:space:]]'`
+  elsif RUBY_PLATFORM["linux"]
+    time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
+  else
+    hostOs="Windows"
+    TimeZone=`tzutil /g`
+  end
+
+  # Setting timezone
+  if Vagrant.has_plugin?("vagrant-timezone")
+    config.timezone.value = time_zone
+  end
 end
