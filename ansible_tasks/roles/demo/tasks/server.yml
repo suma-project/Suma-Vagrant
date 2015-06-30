@@ -20,7 +20,7 @@
 - name: install libapache2-mod-auth-mysql
   apt: name=libapache2-mod-auth-mysql
 
-- name: install phpbrew dependencies
+- name: install php dependencies
   apt: pkg={{item}}
   with_items:
     - libfcgi-dev
