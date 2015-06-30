@@ -46,7 +46,7 @@
   apt: name=nodejs
 
 - name: symlink node
-  command: ln -s /usr/bin/nodejs /usr/bin/node
+  file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
 
 - name: install npm
   apt: name=npm
