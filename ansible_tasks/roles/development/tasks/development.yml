@@ -1,29 +1,4 @@
 # Install development dependencies
-- name: install xdebug
-  apt: pkg=php5-xdebug
-
-- name: add xdebug path
-  ini_file: dest=/etc/php5/apache2/php.ini section=xdebug option=zend_extension value="/usr/lib/php5/20121212+lfs/xdebug.so"
-  tags: set_xdebug_path
-
-- name: enable xdebug profiler
-  ini_file: dest=/etc/php5/apache2/php.ini section=xdebug option=xdebug.profiler_enable value=1
-  tags: enable_xdebug_profiler
-
-- name: set xdebug output directory
-  ini_file: dest=/etc/php5/apache2/php.ini section=xdebug option=xdebug.profiler_output_dir value="/tmp"
-  tags: set_xdebug_directory
-
-- name: restart apache
-  service: name=apache2 state=restarted
-  tags: apacherestart
-
-- name: cron job for xdebug logs
-  cron: name="remove cachegrind files" minute="15" job="cd /tmp && rm cachegrind.*"
-
-- name: install webgrind
-  git: repo=https://github.com/jokkedk/webgrind.git dest=/var/www/html/webgrind accept_hostkey=yes
-
 - name: install Ruby
   apt: pkg={{ item }} state=latest
   with_items:
@@ -38,9 +13,6 @@
 
 - name: install bundler
   command: gem install bundler
-
-- name: install phpunit
-  apt: name=phpunit
 
 - name: install node
   apt: name=nodejs
