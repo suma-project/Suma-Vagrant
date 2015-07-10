@@ -21,6 +21,10 @@ elif [ "$1" == "provision-dev" ]
 then
   echo "Provisioning development environment on guest (this may take awhile)..."
   vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/development.yml'
+elif [ "$1" == "grunt" ]
+then
+  echo "Running default grunt tasks on guest..."
+  vagrant ssh -- 'cd /vagrant/suma/analysis && /usr/local/bin/grunt'
 elif [ "$1" == "grunt-test" ]
 then
   echo "Running grunt tests on guest..."
