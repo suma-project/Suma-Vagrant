@@ -1,23 +1,28 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Install required plugins
-# see http://stackoverflow.com/a/28801317
-required_plugins = %w(vagrant-timezone)
-
-required_plugins.each do |plugin|
-  need_restart = false
-  unless Vagrant.has_plugin? plugin
-    system "vagrant plugin install #{plugin}"
-    need_restart = true
-  end
-  exec "vagrant #{ARGV.join(' ')}" if need_restart
-end
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
+# Method from numist at https://gist.github.com/numist/f34cb150e337a8b948d9
+def get_local_timezone_str
+  # Yes, this is actually a shell script…
+  olsontz = `if [ -f /etc/timezone ]; then
+    cat /etc/timezone
+  elif [ -h /etc/localtime ]; then
+    readlink /etc/localtime | sed "s/\\/usr\\/share\\/zoneinfo\\///"
+  else
+    checksum=\`md5sum /etc/localtime | cut -d' ' -f1\`
+    find /usr/share/zoneinfo/ -type f -exec md5sum {} \\; | grep "^$checksum" | sed "s/.*\\/usr\\/share\\/zoneinfo\\///" | head -n 1
+  fi`.chomp
+
+  # …and it almost certainly won't work with Windows or weird *nixes
+  throw "Olson time zone could not be determined" if olsontz.nil? || olsontz.empty?
+  return olsontz
+end
+
 Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", guest: 80, host: 19679
@@ -99,18 +104,16 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get install apache2
   # SHELL
 
-  # Host platform detection
-  if RUBY_PLATFORM["darwin"]
-    time_zone=`sudo systemsetup -gettimezone|cut -d':' -f2| tr -d '[[:space:]]'`
-  elsif RUBY_PLATFORM["linux"]
-    time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
-  else
-    hostOs="Windows"
-    TimeZone=`tzutil /g`
-  end
+  config.vm.provision "timezone", type:"shell" do |t|
+    # Host platform detection
+    if RUBY_PLATFORM["darwin"]
+      time_zone = get_local_timezone_str
+    elsif RUBY_PLATFORM["linux"]
+      time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
+    else
+      time_zone=`tzutil /g`
+    end
 
-  # Setting timezone
-  if Vagrant.has_plugin?("vagrant-timezone")
-    config.timezone.value = time_zone
+    t.inline = "timedatectl set-timezone " + time_zone
   end
 end
