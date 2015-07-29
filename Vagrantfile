@@ -13,8 +13,8 @@ def get_local_timezone_str
   elif [ -h /etc/localtime ]; then
     readlink /etc/localtime | sed "s/\\/usr\\/share\\/zoneinfo\\///"
   else
-    checksum=\`md5sum /etc/localtime | cut -d' ' -f1\`
-    find /usr/share/zoneinfo/ -type f -exec md5sum {} \\; | grep "^$checksum" | sed "s/.*\\/usr\\/share\\/zoneinfo\\///" | head -n 1
+    checksum=\`/sbin/md5 -r /etc/localtime | cut -d' ' -f1\`
+    find /usr/share/zoneinfo/ -type f -exec /sbin/md5 -r {} \\; | grep "^$checksum" | sed "s/.*\\/usr\\/share\\/zoneinfo\\///" | head -n 1
   fi`.chomp
 
   throw "Olson time zone could not be determined" if olsontz.nil? || olsontz.empty?
