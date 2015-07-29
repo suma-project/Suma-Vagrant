@@ -8,7 +8,6 @@
 
 # Method from numist at https://gist.github.com/numist/f34cb150e337a8b948d9
 def get_local_timezone_str
-  # Yes, this is actually a shell script…
   olsontz = `if [ -f /etc/timezone ]; then
     cat /etc/timezone
   elif [ -h /etc/localtime ]; then
@@ -18,7 +17,6 @@ def get_local_timezone_str
     find /usr/share/zoneinfo/ -type f -exec md5sum {} \\; | grep "^$checksum" | sed "s/.*\\/usr\\/share\\/zoneinfo\\///" | head -n 1
   fi`.chomp
 
-  # …and it almost certainly won't work with Windows or weird *nixes
   throw "Olson time zone could not be determined" if olsontz.nil? || olsontz.empty?
   return olsontz
 end
@@ -107,7 +105,11 @@ Vagrant.configure(2) do |config|
   config.vm.provision "timezone", type:"shell" do |t|
     # Host platform detection
     if RUBY_PLATFORM["darwin"]
-      time_zone = get_local_timezone_str
+      begin
+        time_zone = get_local_timezone_str
+      rescue
+        time_zone = "UTC"
+      end
     elsif RUBY_PLATFORM["linux"]
       time_zone=`cat /etc/timezone| tr -d '[[:space:]]'`
     else
