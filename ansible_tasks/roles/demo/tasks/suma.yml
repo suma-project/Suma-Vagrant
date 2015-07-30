@@ -14,6 +14,15 @@
 - name: create db user
   mysql_user: name=suma password=12345 priv=*.*:ALL state=present
 
+- name: create host db user
+  mysql_user: name=suma password=12345 host=10.% priv=*.*:ALL state=present
+
+- name: bind mysql to 0.0.0.0
+  lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address line=bind-address=0.0.0.0
+
+- name: restart mysql
+  service: name=mysql state=restarted
+
 # Suma symlinks
 - name: create sumaserver symlink
   file: src=/vagrant/suma/service/web/ dest=/var/www/html/sumaserver state=link
