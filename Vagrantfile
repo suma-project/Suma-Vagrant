@@ -6,6 +6,19 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 
+# Verify and install required plugins
+# required_plugins = %w(vagrant-vbguest)
+# TODO: Should we auto-update these?
+required_plugins = %w(vagrant-vbguest)
+required_plugins.each do |plugin|
+  need_restart = false
+  unless Vagrant.has_plugin? plugin
+    system "vagrant plugin install #{plugin}"
+    need_restart = true
+  end
+  exec "vagrant #{ARGV.join(' ')}" if need_restart
+end
+
 # Method from numist at https://gist.github.com/numist/f34cb150e337a8b948d9
 def get_local_timezone_str
   olsontz = `if [ -f /etc/timezone ]; then
