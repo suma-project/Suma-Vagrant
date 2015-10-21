@@ -9,14 +9,18 @@
 # Verify and install required plugins
 # required_plugins = %w(vagrant-vbguest)
 # TODO: Should we auto-update these?
+if ENV['VAGRANT_PLUGINS_UPDATED']=='true'
+   alreadyUpdated = 'true'
+end
+
 required_plugins = %w(vagrant-vbguest)
-required_plugins.each do |plugin|
-  need_restart = false
-  unless Vagrant.has_plugin? plugin
-    system "vagrant plugin install #{plugin}"
-    need_restart = true
-  end
-  exec "vagrant #{ARGV.join(' ')}" if need_restart
+
+if alreadyUpdated != 'true' && (ARGV[0] == "up" || ARGV[0] == "provision")
+  system "vagrant plugin update #{required_plugins}"
+  ENV['VAGRANT_PLUGINS_UPDATED'] = 'true'
+
+  # Restart vagrant after plugin updates
+  exec "vagrant #{ARGV.join(' ')}"
 end
 
 # Method from numist at https://gist.github.com/numist/f34cb150e337a8b948d9
