@@ -31,7 +31,7 @@
 
 # Prepare development environment
 - name: install suma npm packages
-  command: npm install
+  command: npm install --no-bin-links
   args:
     chdir: /vagrant/suma/analysis/
   tags: npm-install
