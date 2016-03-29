@@ -16,6 +16,7 @@ end
 required_plugins = %w(vagrant-vbguest)
 
 if alreadyUpdated != 'true' && (ARGV[0] == "up" || ARGV[0] == "provision")
+  system "vagrant plugin install #{required_plugins}"
   system "vagrant plugin update #{required_plugins}"
   ENV['VAGRANT_PLUGINS_UPDATED'] = 'true'
 
