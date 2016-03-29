@@ -11,6 +11,7 @@ then
 
     echo "Installing Ansible"
     apt-get install -qq ansible || exit 1
+    cp /vagrant/.ansible.cfg /home/vagrant/.ansible.cfg
     echo "Ansible installed"
 fi
 
