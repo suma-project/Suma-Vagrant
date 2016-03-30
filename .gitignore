@@ -1,2 +1,4 @@
 .vagrant/
 suma/
+ansible/ansible.log
+ansible/tmp/*
