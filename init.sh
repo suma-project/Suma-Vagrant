@@ -11,9 +11,8 @@ then
 
     echo "Installing Ansible"
     apt-get install -qq ansible || exit 1
-    cp /vagrant/.ansible.cfg /home/vagrant/.ansible.cfg
     echo "Ansible installed"
 fi
 
-cd /vagrant/ansible_tasks
-ansible-playbook demo.yml --connection=local
+cd /vagrant
+ansible-playbook ansible_tasks/demo.yml --connection=local

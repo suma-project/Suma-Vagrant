@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 80, host: 19679
+  config.vm.network "forwarded_port", guest: 80, host: 8888
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
   # Create a private network, which allows host-only access to the machine
@@ -119,7 +119,7 @@ Vagrant.configure(2) do |config|
   # Ansible provisioning
   config.vm.provision :shell,
     :keep_color => true,
-    :inline => "export PYTHONUNBUFFERED=1 && export ANSIBLE_FORCE_COLOR=1 && cd /vagrant && chmod u+x init.sh && ./init.sh"
+    :inline => "export PYTHONUNBUFFERED=1 && cd /vagrant && chmod u+x init.sh && ./init.sh"
 
   # Timezone provisioning
   config.vm.provision "timezone", type:"shell" do |t|
