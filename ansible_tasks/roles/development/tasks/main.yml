@@ -1,3 +1,2 @@
 ---
 - include: development.yml
-- include: phantomjs.yml

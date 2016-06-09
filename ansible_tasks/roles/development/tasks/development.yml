@@ -29,6 +29,9 @@
 - name: install bower
   command: npm install -g bower
 
+- name: update global npm packages
+  command: npm update -g
+
 # Prepare development environment
 - name: install suma npm packages
   command: npm install --no-bin-links
