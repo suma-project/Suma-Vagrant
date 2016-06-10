@@ -15,4 +15,4 @@ then
 fi
 
 cd /vagrant
-ansible-playbook ansible_tasks/demo.yml --connection=local
+ansible-playbook ansible_tasks/demo.yml --connection=local --inventory=development.ini
