@@ -1,6 +1,8 @@
 ---
 - hosts: localhost
-  sudo: true
+  become: yes
+  become_method: sudo
+  become_user: root
   roles:
     - demo
     - copy_apache_configs
