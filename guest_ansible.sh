@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 if [ "$1" == "bower-install" ]
 then
   echo "Running bower install on guest..."
@@ -12,7 +11,7 @@ then
 elif [ "$1" == "npm-install" ]
 then
   echo "Running npm-install on guest..."
-  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/development.yml --tags=npm-install'
+  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/development.yml --tags=npm-install --inventory=development.ini'
 elif [ "$1" == "npm-clean" ]
 then
   echo "Running npm-clean on guest..."
@@ -20,7 +19,7 @@ then
 elif [ "$1" == "provision-dev" ]
 then
   echo "Provisioning development environment on guest (this may take awhile)..."
-  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/development.yml'
+  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/development.yml --inventory=development.ini'
 elif [ "$1" == "grunt" ]
 then
   echo "Running default grunt tasks on guest..."
@@ -45,11 +44,11 @@ then
 elif [ "$1" == "apache-configs" ]
 then
   echo "Running apache-configs on guest..."
-  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/copy_apache_configs.yml'
+  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/copy_apache_configs.yml --inventory=development.ini'
 elif [ "$1" == "suma-configs" ]
 then
   echo "Running suma-configs on guest..."
-  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/copy_suma_configs.yml'
+  vagrant ssh -- 'cd /vagrant && /usr/bin/ansible-playbook /vagrant/ansible_tasks/copy_suma_configs.yml --inventory=development.ini'
 else
   echo -e "\nUnknown or missing command, options are:\n"
   echo -e "\tapache-configs - Copy apache configs"
