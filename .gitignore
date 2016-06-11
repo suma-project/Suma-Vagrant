@@ -2,3 +2,4 @@
 suma/
 ansible/ansible.log
 ansible/tmp/*
+*.retry
