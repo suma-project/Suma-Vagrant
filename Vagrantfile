@@ -119,9 +119,11 @@ Vagrant.configure(2) do |config|
   # SHELL
 
   # Ansible provisioning
-  config.vm.provision :shell,
-    :keep_color => true,
-    :inline => "export PYTHONUNBUFFERED=1 && cd /vagrant && chmod u+x init.sh && ./init.sh"
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = 'ansible_tasks/demo.yml'
+    ansible.inventory_path = 'development.ini'
+    ansible.limit = 'all'
+  end
 
   # Timezone provisioning
   config.vm.provision "timezone", type:"shell" do |t|
