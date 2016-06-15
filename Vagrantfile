@@ -64,8 +64,9 @@ Vagrant.configure(2) do |config|
 
   # Ansible provisioning
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = 'ansible_tasks/demo.yml'
-    ansible.inventory_path = 'development.ini'
+    ansible.provisioning_path = '/vagrant/ansible'
+    ansible.playbook = 'demo.yml'
+    ansible.inventory_path = 'inventories/development.ini'
     ansible.limit = 'all'
   end
 
