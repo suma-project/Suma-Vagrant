@@ -48,8 +48,8 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "suma-vagrant"
 
   # Create a forwarded port mapping
-  config.vm.network "forwarded_port", guest: 80, host: 19679, auto_correct: true
-  config.vm.network "forwarded_port", guest: 3306, host: 3306, auto_correct: true
+  config.vm.network "forwarded_port", guest: 80, host: 19679
+  config.vm.network "forwarded_port", guest: 3306, host: 3306
 
   # Share an additional folder to the guest VM
   if RUBY_PLATFORM["darwin"] || RUBY_PLATFORM["linux"]
