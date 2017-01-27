@@ -1,19 +1,4 @@
 # Install development dependencies
-- name: install Ruby
-  apt: pkg={{ item }} state=latest
-  with_items:
-    - ruby2.0
-    - ruby2.0-dev
-
-- name: create symlink for Ruby
-  file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
-
-- name: create symlink for Ruby gems
-  file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
-
-- name: install bundler
-  command: gem install bundler
-
 - name: install node
   apt: name=nodejs
 
@@ -45,6 +30,11 @@
     chdir: /vagrant/suma/analysis
 
 - name: prepare development environment
+  become: yes
+  become_method: sudo
+  become_user: vagrant
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/rvm/gems/{{ ruby_version }}/bin"
   command: grunt prepareDevEnv
   args:
     chdir: /vagrant/suma/analysis/
