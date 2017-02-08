@@ -23,20 +23,20 @@ then
 elif [ "$1" == "grunt" ]
 then
   echo "Running default grunt tasks on guest..."
-  vagrant ssh -- 'cd /vagrant/suma/analysis && /usr/local/bin/grunt'
+  vagrant ssh -- 'source /etc/profile.d/rvm.sh; cd /vagrant/suma/analysis && /usr/local/bin/grunt'
 elif [ "$1" == "grunt-test" ]
 then
   echo "Running grunt tests on guest..."
-  vagrant ssh -- 'cd /vagrant/suma/analysis && /usr/local/bin/grunt test'
+  vagrant ssh -- 'source /etc/profile.d/rvm.sh; cd /vagrant/suma/analysis && /usr/local/bin/grunt test'
 elif [ "$1" == "grunt-build" ]
 then
   echo "Running grunt build on guest..."
-  vagrant ssh -- 'cd /vagrant/suma/analysis && /usr/local/bin/grunt build'
+  vagrant ssh -- 'source /etc/profile.d/rvm.sh; cd /vagrant/suma/analysis && /usr/local/bin/grunt build'
 elif [ "$1" == "grunt-watch" ]
 then
   echo "Running grunt watch on guest..."
   echo "NOTE: this task will continue to run"
-  vagrant ssh -- 'cd /vagrant/suma/analysis && /usr/local/bin/grunt watch'
+  vagrant ssh -- 'source /etc/profile.d/rvm.sh; cd /vagrant/suma/analysis && /usr/local/bin/grunt watch'
 elif [ "$1" == "grunt-lint" ]
 then
   echo "Running grunt lint on guest..."
