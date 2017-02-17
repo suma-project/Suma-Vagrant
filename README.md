@@ -1,6 +1,6 @@
 # Suma-Vagrant
 
-This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used to create an easy way to demo [Suma](https://github.com/cazzerson/Suma).
+This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used to create an easy way to demo [Suma](https://github.com/suma-project/Suma).
 
 ## Installation
 
