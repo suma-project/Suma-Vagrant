@@ -1,7 +1,7 @@
 ---
 # Clone Suma repo
 - name: clone suma
-  git: repo=https://github.com/cazzerson/Suma.git dest=/vagrant/suma accept_hostkey=yes
+  git: repo=https://github.com/suma-project/Suma dest=/vagrant/suma accept_hostkey=yes
   tags: suma
 
 # Create and populate DB
