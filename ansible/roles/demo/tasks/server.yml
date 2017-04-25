@@ -1,4 +1,9 @@
 ---
+- name: add php repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
 - name: update apt cache
   apt: update_cache=yes
 
@@ -20,96 +25,113 @@
 - name: install libapache2-mod-auth-mysql
   apt: name=libapache2-mod-auth-mysql
 
-- name: install php dependencies
-  apt: pkg={{item}}
+- name: install php 5.6
+  apt: name={{item}}
   with_items:
-    - libfcgi-dev
-    - libfcgi0ldbl
-    - libjpeg62-dbg
-    - libmcrypt-dev
-    - libssl-dev
-    - libbz2-dev
-    - libjpeg-dev
-    - libfreetype6-dev
-    - libpng12-dev
-    - libxpm-dev
-    - libxml2-dev
-    - libpcre3-dev
-    - libbz2-dev
-    - libcurl4-openssl-dev
-    - libjpeg-dev
-    - libpng12-dev
-    - libxpm-dev
-    - libfreetype6-dev
-    - libmysqlclient-dev
-    - libt1-dev
-    - libgd2-xpm-dev
-    - libgmp-dev
-    - libsasl2-dev
-    - libmhash-dev
-    - unixodbc-dev
-    - freetds-dev
-    - libpspell-dev
-    - libsnmp-dev
-    - libtidy-dev
-    - libxslt1-dev
-    - libmcrypt-dev
-    - libdb5.3-dev
+    - php5.6
+    - php5.6-mbstring
+    - php5.6-mcrypt
+    - php5.6-mysql
+    - php5.6-xml
+    - php5.6-curl
 
-- name: Download PHP 5.3.29 source
-  get_url: url=http://us1.php.net/get/php-5.3.29.tar.gz/from/this/mirror dest=/var/tmp/php-5.3.29.tar.gz
+## FIXME: Remove tasks below
 
-- name: create build dir
-  file: path=/opt/build state=directory
-
-- name: create freetype dir
-  file: dest=/usr/include/freetype2/freetype state=directory
-
-- name: symlink freetype dir
-  file: src=/usr/include/freetype2/freetype.h dest=/usr/include/freetype2/freetype/freetype.h state=link
-
-- name: unarchive php tar
-  unarchive: src=/var/tmp/php-5.3.29.tar.gz dest=/opt/build
-
-- name: configure PHP sources
-  command: ./configure \
-    --with-mcrypt \
-    --enable-mbstring \
-    --with-openssl \
-    --with-mysql \
-    --with-mysql-sock \
-    --with-apxs2=/usr/bin/apxs2 \
-    --with-mpm=prefork \
-    --with-gd \
-    --with-jpeg-dir=/usr/lib \
-    --enable-gd-native-ttf  \
-    --with-pdo-mysql \
-    --with-libxml-dir=/usr/lib \
-    --with-mysqli=/usr/bin/mysql_config \
-    --with-curl \
-    --enable-zip  \
-    --enable-sockets \
-    --with-zlib \
-    --enable-exif \
-    --enable-ftp \
-    --with-iconv \
-    --with-gettext \
-    --enable-gd-native-ttf \
-    --with-t1lib=/usr \
-    --with-freetype-dir=/usr
-    --with-config-file-path=/etc/php5/apache2/php.ini
-  args:
-    chdir: /opt/build/php-5.3.29/
-
-- name: build php (this may take a while)
-  command: make
-  args:
-    chdir: /opt/build/php-5.3.29/
-
-- name: install php
-  command: make install
-  args:
-    chdir: /opt/build/php-5.3.29/
-
-- name: install php5-mysql
-  apt: name=php5-mysql state=present
+# - name: download PHP Brew
+#   get_url:
+#       url: https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+#       dest: /usr/local/bin/phpbrew
+#       mode: "u=rwx,g=rwx,o=rwx"
+# - name: install php dependencies
+#   apt: pkg={{item}}
+#   with_items:
+#     - libfcgi-dev
+#     - libfcgi0ldbl
+#     - libjpeg62-dbg
+#     - libmcrypt-dev
+#     - libssl-dev
+#     - libbz2-dev
+#     - libjpeg-dev
+#     - libfreetype6-dev
+#     - libpng12-dev
+#     - libxpm-dev
+#     - libxml2-dev
+#     - libpcre3-dev
+#     - libbz2-dev
+#     - libcurl4-openssl-dev
+#     - libjpeg-dev
+#     - libpng12-dev
+#     - libxpm-dev
+#     - libfreetype6-dev
+#     - libmysqlclient-dev
+#     - libt1-dev
+#     - libgd2-xpm-dev
+#     - libgmp-dev
+#     - libsasl2-dev
+#     - libmhash-dev
+#     - unixodbc-dev
+#     - freetds-dev
+#     - libpspell-dev
+#     - libsnmp-dev
+#     - libtidy-dev
+#     - libxslt1-dev
+#     - libmcrypt-dev
+#     - libdb5.3-dev
+#
+# - name: Download PHP 5.3.29 source
+#   get_url: url=http://us1.php.net/get/php-5.3.29.tar.gz/from/this/mirror dest=/var/tmp/php-5.3.29.tar.gz
+#
+# - name: create build dir
+#   file: path=/opt/build state=directory
+#
+# - name: create freetype dir
+#   file: dest=/usr/include/freetype2/freetype state=directory
+#
+# - name: symlink freetype dir
+#   file: src=/usr/include/freetype2/freetype.h dest=/usr/include/freetype2/freetype/freetype.h state=link
+#
+# - name: unarchive php tar
+#   unarchive: src=/var/tmp/php-5.3.29.tar.gz dest=/opt/build
+#
+# - name: configure PHP sources
+#   command: ./configure \
+#     --with-mcrypt \
+#     --enable-mbstring \
+#     --with-openssl \
+#     --with-mysql \
+#     --with-mysql-sock \
+#     --with-apxs2=/usr/bin/apxs2 \
+#     --with-mpm=prefork \
+#     --with-gd \
+#     --with-jpeg-dir=/usr/lib \
+#     --enable-gd-native-ttf  \
+#     --with-pdo-mysql \
+#     --with-libxml-dir=/usr/lib \
+#     --with-mysqli=/usr/bin/mysql_config \
+#     --with-curl \
+#     --enable-zip  \
+#     --enable-sockets \
+#     --with-zlib \
+#     --enable-exif \
+#     --enable-ftp \
+#     --with-iconv \
+#     --with-gettext \
+#     --enable-gd-native-ttf \
+#     --with-t1lib=/usr \
+#     --with-freetype-dir=/usr
+#     --with-config-file-path=/etc/php5/apache2/php.ini
+#   args:
+#     chdir: /opt/build/php-5.3.29/
+#
+# - name: build php (this may take a while)
+#   command: make
+#   args:
+#     chdir: /opt/build/php-5.3.29/
+#
+# - name: install php
+#   command: make install
+#   args:
+#     chdir: /opt/build/php-5.3.29/
+#
+# - name: install php5-mysql
+#   apt: name=php5-mysql state=present
