@@ -25,15 +25,15 @@
 - name: install libapache2-mod-auth-mysql
   apt: name=libapache2-mod-auth-mysql
 
-- name: install php 5.6
+- name: install php 7
   apt: name={{item}}
   with_items:
-    - php5.6
-    - php5.6-mbstring
-    - php5.6-mcrypt
-    - php5.6-mysql
-    - php5.6-xml
-    - php5.6-curl
+    - php7.1
+    - php7.1-mbstring
+    - php7.1-mcrypt
+    - php7.1-mysql
+    - php7.1-xml
+    - php7.1-curl
 
 ## FIXME: Remove tasks below
 
