@@ -57,7 +57,7 @@
     - libdb5.3-dev
 
 - name: Download PHP 5.3.29 source
-  get_url: url=http://us1.php.net/get/php-5.3.29.tar.gz/from/this/mirror dest=/var/tmp/php-5.3.29.tar.gz
+  get_url: url=http://us2.php.net/get/php-5.3.29.tar.gz/from/this/mirror dest=/var/tmp/php-5.3.29.tar.gz
 
 - name: create build dir
   file: path=/opt/build state=directory
