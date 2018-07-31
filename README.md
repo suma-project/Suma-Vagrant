@@ -14,15 +14,23 @@ by executing `vagrant up --provider=parallels` in step 3 above.
 
 ## Configuration
 
-To modify your Suma configuration, just edit the files in the `config` directory.
+To modify your Suma configuration, edit the files in the `config` directory.
 
-## Shutdown
+## Virtual Machine Management
 
-To suspend your virtual machine, just type `vagrant suspend` from the `Suma-Vagrant` directory. To shut the machine down, type `vagrant halt`. You can start it back up again with `vagrant up`.
+To suspend your virtual machine, type `vagrant suspend` from the `Suma-Vagrant` directory.
+
+To shut the machine down, type `vagrant halt`.
+
+To start it back up again, type `vagrant up`.
 
 ## Admin Tools
 
 The Suma admin tools can be found at [http://localhost:19679/sumaserver/admin](http://localhost:19679/sumaserver/admin). The default admin username is "sumaadmin" and admin password is "sumaadmin".
+
+## PHP Version
+
+Suma-Vagrant installs Suma in a PHP 7.x environment. If you need to experiment with an older version under PHP 5.x, please use one of the 5.x branches.
 
 ## Using Suma-Vagrant as a development environment for Suma
 
