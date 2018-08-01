@@ -1,4 +1,4 @@
-## What is rvm1-ansible? [![Build Status](https://secure.travis-ci.org/rvm/rvm1-ansible.png)](http://travis-ci.org/rvm/rvm1-ansible)
+## What is rvm1-ansible? [![Build Status](https://travis-ci.org/rvm/rvm1-ansible.svg?branch=master)](https://travis-ci.org/rvm/rvm1-ansible) [![Ansible Role](https://img.shields.io/badge/role-rvm_io-red.svg)](https://galaxy.ansible.com/rvm/ruby)
 
 It is an [Ansible](http://www.ansible.com/home) role to install and manage ruby versions using rvm.
 
@@ -55,7 +55,7 @@ rvm1_ruby_install_flags:
 rvm1_user: 'ubuntu'
 
 # URL for the latest installer script
-rvm1_rvm_latest_installer: 'https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer'
+rvm1_rvm_latest_installer: 'https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer'
 
 # rvm version to use
 rvm1_rvm_version: 'stable'
@@ -101,12 +101,12 @@ If you need to pass a list of ruby versions, pass it in an array like so.
   roles:
     - { role: rvm_io.ruby,
         tags: ruby,
-        become: yes
+        become: yes,
 
         rvm1_rubies: ['ruby-2.2.5','ruby-2.3.1'],
-        rvm1_install_flags: '--auto-dotfiles'     # Remove --user-install from defaults
-        rvm1_install_path: /usr/local/rvm         # Set to system location
-        rvm1_user: root                           # Need root account to access system location
+        rvm1_install_flags: '--auto-dotfiles',     # Remove --user-install from defaults
+        rvm1_install_path: /usr/local/rvm,         # Set to system location
+        rvm1_user: root                            # Need root account to access system location
       }
 ```
 _rvm_rubies must be specified via `ruby-x.x.x` so that if you want_
@@ -163,7 +163,7 @@ Just add `--extra-vars 'rvm1_delete_ruby=ruby-2.1.0'` to the end of your play bo
 
 ## Ansible galaxy
 
-You can find it on the official [ansible galaxy](https://galaxy.ansible.com/rvm_io/ruby/) if you want to rate it.
+You can find it on the official [ansible galaxy](https://galaxy.ansible.com/rvm/ruby) if you want to rate it.
 
 ## License
 
