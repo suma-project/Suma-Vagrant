@@ -4,7 +4,7 @@
   become_method: sudo
   become_user: root
   vars:
-    ruby_version: ruby-2.3.1
+    ruby_version: ruby-2.5.1
   roles:
     - role: rvm-setup
       rubies:
