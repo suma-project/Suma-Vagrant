@@ -4,24 +4,17 @@
   git: repo=https://github.com/suma-project/Suma dest=/vagrant/suma accept_hostkey=yes
   tags: suma
 
-# Create and populate DB
-- name: create mysql db
-  mysql_db: name=suma state=present
-
 - name: populate mysql db
   mysql_db: name=suma state=import target=/vagrant/suma/service/config/schema_w_sample.sql
+#
+# - name: create db user
+#   mysql_user: name=suma password=12345 priv=*.*:ALL state=present
+#
+# - name: create host db user
+#   mysql_user: name=suma password=12345 host=10.% priv=*.*:ALL state=present
 
-- name: create db user
-  mysql_user: name=suma password=12345 priv=*.*:ALL state=present
-
-- name: create host db user
-  mysql_user: name=suma password=12345 host=10.% priv=*.*:ALL state=present
-
-- name: bind mysql to 0.0.0.0
-  lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address line=bind-address=0.0.0.0
-
-- name: restart mysql
-  service: name=mysql state=restarted
+- name: restart mysql (mariadb)
+  service: name=mariadb state=restarted
 
 # Suma symlinks
 - name: create sumaserver symlink
@@ -46,3 +39,16 @@
 # Index.html
 - name: copy index.html
   copy: src=/vagrant/configs/index.html dest=/var/www/html
+
+# Suma configs
+- name: link service config
+  copy: src=/vagrant/configs/service/config/config.yaml dest=/vagrant/suma/service/config/config.yaml
+
+- name: link service/web config
+  copy: src=/vagrant/configs/service/web/config/config.yaml dest=/vagrant/suma/service/web/config/config.yaml
+
+- name: link analysis config
+  copy: src=/vagrant/configs/analysis/config/config.yaml dest=/vagrant/suma/analysis/config/config.yaml
+
+- name: link client config
+  copy: src=/vagrant/configs/web/config/spaceassessConfig.js dest=/vagrant/suma/web/config/spaceassessConfig.js
