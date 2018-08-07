@@ -1,3 +1,0 @@
----
-- name: rvm fix-permissions system
-  command: /bin/bash -lc 'rvm fix-permissions :rvm'

@@ -1,0 +1,16 @@
+# from galaxy
+- src: rvm_io.ruby
+- src: geerlingguy.mysql
+- src: geerlingguy.php
+- src: geerlingguy.apache
+- src: geerlingguy.repo-remi
+- src: geerlingguy.php-versions
+
+# from github, overriding the name and specifying a specific tag
+- src: https://github.com/NCSU-Libraries-Ansible-Roles/basic-setup.git
+  version: "v1.1.0"
+  name: basic-setup
+
+- src: https://github.com/NCSU-Libraries-Ansible-Roles/dev-open-firewall.git
+  version: "v1.1.0"
+  name: dev-open-firewall
