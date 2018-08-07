@@ -25,7 +25,6 @@
     - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: suma-ansible
-    - role: copy_suma_configs
     # - role: postfix
     #     postfix_domain: 'example.com',
     #     postfix_notify_email: 'nobody@example.com'
