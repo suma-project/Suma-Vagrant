@@ -7,13 +7,11 @@
 # you're doing.
 
 # Verify and install required plugins
-# required_plugins = %w(vagrant-vbguest)
+required_plugins = %s(vagrant-sshfs)
 # TODO: Should we auto-update these?
 if ENV['VAGRANT_PLUGINS_UPDATED']=='true'
    alreadyUpdated = 'true'
 end
-
-required_plugins = %s(vagrant-vbguest)
 
 if alreadyUpdated != 'true' && (ARGV[0] == "up" || ARGV[0] == "provision")
   system "vagrant plugin install #{required_plugins}"
@@ -41,26 +39,18 @@ end
 
 Vagrant.configure(2) do |config|
 
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
-  config.vm.box = "ubuntu/trusty32"
-
+  # config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  config.vm.box = "centos/7"
   config.vm.hostname = "suma-vagrant"
+  config.vm.synced_folder ".", "/vagrant", type: "sshfs"
+  config.ssh.forward_agent = true
 
   # Create a forwarded port mapping
   config.vm.network "forwarded_port", guest: 80, host: 19679
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
-  # Share an additional folder to the guest VM
-  if RUBY_PLATFORM["darwin"] || RUBY_PLATFORM["linux"]
-    config.vm.synced_folder "suma/", "/vagrant/suma", create: true
-  else
-    config.vm.synced_folder "suma/", "/vagrant/suma", create: true, type: "smb"
-  end
-
-  config.vm.provider "parallels" do |vb, override|
-    override.vm.box = "parallels/ubuntu-14.04-i386"
-  end
+  # install git before running ansible provisioner
+  config.vm.provision "shell", inline: "yum -y install git"
 
   # Ansible provisioning
   config.vm.provision "ansible_local" do |ansible|
