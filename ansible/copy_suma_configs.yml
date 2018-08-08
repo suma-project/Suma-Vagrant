@@ -1,7 +1,0 @@
----
-- hosts: localhost
-  become: yes
-  become_method: sudo
-  become_user: root
-  roles:
-    - copy_suma_configs
