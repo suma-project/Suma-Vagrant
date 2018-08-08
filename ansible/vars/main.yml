@@ -36,36 +36,6 @@ apache_vhosts:
           RewriteRule ^.*$ index.php [NC,L]
         </Directory>
 
-# apache_global_vhost_settings: |
-  # Options Indexes FollowSymLinks Includes
-  # DirectoryIndex index.php index.html
-  # AddType application/x-httpd-php .php
-  # AddType text/html .html
-  # AddType text/html .htm
-  # AddOutputFilter INCLUDES .shtml .html .php
-# apache_vhosts:
-#   - servername: "localhost"
-#     extra_parameters: |
-#       <Directory "/var/www/html/sumaserver/">
-#         RewriteEngine On
-#         RewriteCond %{REQUEST_FILENAME} -s [OR]
-#         RewriteCond %{REQUEST_FILENAME} -l [OR]
-#         RewriteCond %{REQUEST_FILENAME} -d
-#         RewriteRule ^.*$ - [NC,L]
-#         RewriteRule ^.*$ index.php [NC,L]
-#       </Directory>
-#
-#       # Suma aliases for development assets
-#       Alias /suma/analysis/src/styles "/var/www/html/suma/analysis/.tmp/styles/"
-#       Alias /suma/analysis/src/fonts "/var/www/html/suma/analysis/.tmp/fonts/"
-#   - servername: "local.dev"
-#     extra_parameters: |
-#       <Directory "/var/www/html">
-#           AllowOverride All
-#           Options +Indexes +FollowSymLinks +Includes
-#           Require all granted
-#       </Directory>
-
 # PHP configs (geerlinguy.php)
 php_enablerepo: remi
 php_version: "7.1"
