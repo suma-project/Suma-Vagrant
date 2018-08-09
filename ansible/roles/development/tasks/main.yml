@@ -1,13 +1,27 @@
 ---
 # Install development dependencies
-- name: install node
-  apt: name=nodejs
+- name: uninstall system node
+  yum:
+    pkg: "{{item}}"
+    state: absent
+  with_items:
+    - nodejs
+    - npm
 
-- name: symlink node
-  file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
+- name: download nodesource installation script (10.x)
+  get_url:
+    url: https://rpm.nodesource.com/setup_10.x
+    dest: /tmp
 
-- name: install npm
-  apt: name=npm
+- name: execute nodesource installation script (10.x)
+  script: /tmp/setup_10.x
+
+- name: install nodesource node (10.x)
+  yum:
+    pkg: "{{item}}"
+    state: present
+  with_items:
+    - nodejs
 
 - name: install grunt-cli
   command: npm install -g grunt-cli
@@ -19,23 +33,37 @@
   command: npm update -g
 
 # Prepare development environment
+- name: create node_modules folder mount target
+  file:
+    path: /home/vagrant/node_modules
+    state: directory
+    mode: 0755
+
+- name: create node_modules folder mount source
+  file:
+    path: /vagrant/suma/analysis/node_modules
+    state: directory
+    mode: 0755
+
+- name: mount node folder (to fix permissions)
+  command: mount --bind /home/vagrant/node_modules/ /vagrant/suma/analysis/node_modules/
+
 - name: install suma npm packages
   command: npm install --no-bin-links
   args:
     chdir: /vagrant/suma/analysis/
   tags: npm-install
 
-- name: install compass
-  command: bundle install
+- name: bundle install compass
+  become_user: vagrant
+  shell: bash -lc "bundle install"
   args:
-    chdir: /vagrant/suma/analysis
+    chdir: /vagrant/suma/analysis/
 
 - name: prepare development environment
   become: yes
   become_method: sudo
   become_user: vagrant
-  environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/rvm/gems/{{ ruby_version }}/bin"
-  command: grunt prepareDevEnv
+  shell: bash -lc "grunt prepareDevEnv"
   args:
     chdir: /vagrant/suma/analysis/

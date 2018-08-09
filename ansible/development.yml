@@ -1,12 +1,7 @@
 ---
-- hosts: localhost
+- hosts: suma-vagrant
   become: yes
   become_method: sudo
   become_user: root
-  vars:
-    ruby_version: ruby-2.5.1
   roles:
-    - role: rvm-setup
-      rubies:
-        - "{{ ruby_version }}"
     - role: development

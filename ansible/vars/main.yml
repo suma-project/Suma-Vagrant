@@ -1,9 +1,10 @@
 project_name: suma
-bundler_ruby: 2.5.1
 
+# rvm_io configs
 rvm1_rubies:
   - ruby-2.5.1
-rvm1_user: "vagrant"
+rvm1_user: 'vagrant'
+ruby_version: ruby-2.5.1
 
 # MySQL configs (geerlinguy.mysql)
 mysql_root_password: 'mysqlrootpassword'

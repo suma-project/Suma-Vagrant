@@ -13,6 +13,11 @@
       with_items:
         - mysql-devel
         - vim
+        - fontconfig
+        - freetype
+        - freetype-devel
+        - fontconfig-devel
+        - libstdc++
   roles:
     - role: basic-setup
     - role: dev-open-firewall
@@ -25,3 +30,5 @@
     - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: suma-ansible
+    - role: rvm_io.ruby
+    - role: development
