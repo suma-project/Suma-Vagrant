@@ -1,6 +1,6 @@
 # Suma-Vagrant
 
-This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used to create an easy way to demo [Suma](https://github.com/suma-project/Suma).
+This is a project showing how Vagrant, VirtualBox, and Ansible can be used to create a demo of [Suma](https://github.com/suma-project/Suma). This is also the recommended Suma development environment.
 
 ## Installation
 
@@ -8,10 +8,6 @@ This is a demo project showing how Vagrant, VirtualBox, and Ansible can be used 
 2. Clone or Download this repository.
 3. From a terminal application, type `vagrant up` from the Suma-Vagrant directory and hit the `Return` key. Note: If you are on OSX, you may need to enter your administrator password. This is so the timezone of the virtual machine (guest) may be configured to match that of the host.
 4. Visit [http://localhost:19679](http://localhost:19679) in your web browser.
-
-## Configuration
-
-To modify your Suma configuration, edit the files in the `config` directory.
 
 ## Virtual Machine Management
 
@@ -31,12 +27,10 @@ Suma-Vagrant installs Suma in a PHP 7.x environment. If you need to experiment w
 
 ## Using Suma-Vagrant as a development environment for Suma
 
-This project includes a bash script "guest_ansible.sh" for doing additional provisioning of the guest in order to prepare it as a Suma development environment and excucute build tasks on the guest from the host. This allows the developer to work in the Suma repository on the host environment using their own configured text editor. From a terminal application, type `./guest_ansible.sh provision-dev` and hit the `Return` key to provision the development environment. This script has additional subcommands that are listed below:
+This project includes a bash script "guest_ansible.sh" for executing development related commands on the Vagrant managed virtual machine. This allows the developer to work in the Suma repository on the host environment using their own configured text editor. For example, to run the test suite, from a terminal application, type `./guest_ansible.sh grunt-test` and hit the `Return` key. This script has additional subcommands that are listed below:
 
-  * apache-configs - Copy apache configs
   * bower-clean    - Clean bower_components directory
   * bower-install  - Execute bower install for analysis tools
-  * suma-configs   - Copy suma configs
   * grunt          - Execute grunt lint, test, and build for analysis tools
   * grunt-build    - Execute grunt build task for analysis tools
   * grunt-lint     - Execute grunt lint for analysis tools
@@ -44,8 +38,7 @@ This project includes a bash script "guest_ansible.sh" for doing additional prov
   * grunt-watch    - Execute grunt watch for analysis tools
   * npm-clean      - Clean node_modules directory
   * npm-install    - Execute npm install for analysis tools
-  * provision-dev  - Provision the development environment on the guest
 
 ## NOTICE
 
-This project is a demo project only and is not intended for production use at this time. *Please use this only for testing or development deployments*.
+This project is not intended for production use at this time. *Please use this only for testing or development deployments*.
