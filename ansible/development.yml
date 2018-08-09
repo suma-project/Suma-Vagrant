@@ -1,7 +1,0 @@
----
-- hosts: suma-vagrant
-  become: yes
-  become_method: sudo
-  become_user: root
-  roles:
-    - role: development
