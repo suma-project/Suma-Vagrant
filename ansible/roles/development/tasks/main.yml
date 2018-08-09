@@ -37,19 +37,22 @@
   file:
     path: /home/vagrant/node_modules
     state: directory
+    owner: vagrant
     mode: 0755
 
 - name: create node_modules folder mount source
   file:
     path: /vagrant/suma/analysis/node_modules
     state: directory
+    owner: vagrant
     mode: 0755
 
 - name: mount node folder (to fix permissions)
   command: mount --bind /home/vagrant/node_modules/ /vagrant/suma/analysis/node_modules/
 
 - name: install suma npm packages
-  command: npm install --no-bin-links
+  become_user: vagrant
+  shell: bash -lc "npm install --no-bin-link"
   args:
     chdir: /vagrant/suma/analysis/
   tags: npm-install
