@@ -44,8 +44,6 @@
   file:
     path: /vagrant/suma/analysis/node_modules
     state: directory
-    owner: vagrant
-    mode: 0755
 
 - name: mount node folder (to fix permissions)
   command: mount --bind /home/vagrant/node_modules/ /vagrant/suma/analysis/node_modules/
