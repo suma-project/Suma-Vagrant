@@ -30,5 +30,5 @@
     - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: suma-ansible
-    - role: rvm_io.ruby
+    - role: rvm.ruby
     - role: development

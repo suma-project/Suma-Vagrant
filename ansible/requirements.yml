@@ -1,5 +1,5 @@
 # from galaxy
-- src: rvm_io.ruby
+- src: rvm.ruby
 - src: geerlingguy.mysql
 - src: geerlingguy.php
 - src: geerlingguy.apache
@@ -8,7 +8,7 @@
 
 # from github, overriding the name and specifying a specific tag
 - src: https://github.com/NCSU-Libraries-Ansible-Roles/basic-setup.git
-  version: "v1.1.0"
+  version: "v1.3.0"
   name: basic-setup
 
 - src: https://github.com/NCSU-Libraries-Ansible-Roles/dev-open-firewall.git
