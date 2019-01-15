@@ -7,17 +7,16 @@
     - vars/main.yml
   pre_tasks:
     - yum:
-        pkg: "{{item}}"
         state: present
         update_cache: yes
-      with_items:
-        - mysql-devel
-        - vim
-        - fontconfig
-        - freetype
-        - freetype-devel
-        - fontconfig-devel
-        - libstdc++
+        name:
+          - mysql-devel
+          - vim
+          - fontconfig
+          - freetype
+          - freetype-devel
+          - fontconfig-devel
+          - libstdc++
   roles:
     - role: basic-setup
     - role: dev-open-firewall
