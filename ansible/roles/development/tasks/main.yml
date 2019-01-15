@@ -2,11 +2,10 @@
 # Install development dependencies
 - name: uninstall system node
   yum:
-    pkg: "{{item}}"
     state: absent
-  with_items:
-    - nodejs
-    - npm
+    name:
+      - nodejs
+      - npm
 
 - name: download nodesource installation script (10.x)
   get_url:
@@ -18,10 +17,9 @@
 
 - name: install nodesource node (10.x)
   yum:
-    pkg: "{{item}}"
     state: present
-  with_items:
-    - nodejs
+    name:
+      - nodejs
 
 - name: install grunt-cli
   command: npm install -g grunt-cli
