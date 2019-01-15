@@ -6,12 +6,6 @@
 
 - name: populate mysql db
   mysql_db: name=suma state=import target=/vagrant/suma/service/config/schema_w_sample.sql
-#
-# - name: create db user
-#   mysql_user: name=suma password=12345 priv=*.*:ALL state=present
-#
-# - name: create host db user
-#   mysql_user: name=suma password=12345 host=10.% priv=*.*:ALL state=present
 
 - name: restart mysql (mariadb)
   service: name=mariadb state=restarted
