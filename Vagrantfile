@@ -23,11 +23,13 @@ if alreadyUpdated != 'true' && (ARGV[0] == "up" || ARGV[0] == "provision")
 end
 
 # Method from numist at https://gist.github.com/numist/f34cb150e337a8b948d9
+# Slight edit to the elif that should handle when localtime is linked
+# to an alternate location
 def get_local_timezone_str
   olsontz = `if [ -f /etc/timezone ]; then
     cat /etc/timezone
   elif [ -h /etc/localtime ]; then
-    readlink /etc/localtime | sed "s/\\/usr\\/share\\/zoneinfo\\///"
+    readlink /etc/localtime | sed "s/^.*zoneinfo\\///"
   else
     checksum=\`/sbin/md5 -r /etc/localtime | cut -d' ' -f1\`
     find /usr/share/zoneinfo/ -type f -exec /sbin/md5 -r {} \\; | grep "^$checksum" | sed "s/.*\\/usr\\/share\\/zoneinfo\\///" | head -n 1
