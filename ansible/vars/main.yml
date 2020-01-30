@@ -39,7 +39,7 @@ apache_vhosts:
 
 # PHP configs (geerlinguy.php)
 php_enablerepo: remi
-php_version: "7.1"
+php_version: "7.3"
 php_memory_limit: "128M"
 php_max_execution_time: "90"
 php_upload_max_filesize: "256M"
