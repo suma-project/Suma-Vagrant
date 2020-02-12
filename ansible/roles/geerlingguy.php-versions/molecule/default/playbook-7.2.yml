@@ -5,7 +5,7 @@
 
   vars:
     php_enable_webserver: false
-    php_version: '7.3'
+    php_version: '7.2'
 
   pre_tasks:
     - name: Update apt cache.
@@ -20,5 +20,5 @@
 
   post_tasks:
     - name: Confirm PHP version is correct.
-      shell: "php -v | grep -F '{{ php_version }}'"
+      shell: php -v | grep -F '{{ php_version }}'
       changed_when: false
