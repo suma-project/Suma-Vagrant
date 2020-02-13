@@ -2,6 +2,7 @@
 # Clone Suma repo
 - name: clone suma
   git: repo=https://github.com/suma-project/Suma dest=/vagrant/suma accept_hostkey=yes
+  version: new-client
   tags: suma
 
 - name: populate mysql db
