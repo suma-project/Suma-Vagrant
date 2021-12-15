@@ -7,7 +7,7 @@
 # you're doing.
 
 # Verify and install required plugins
-required_plugins = %s(vagrant-sshfs)
+required_plugins = %s(vagrant-vbguest vagrant-sshfs)
 # TODO: Should we auto-update these?
 if ENV['VAGRANT_PLUGINS_UPDATED']=='true'
    alreadyUpdated = 'true'
@@ -42,7 +42,7 @@ end
 Vagrant.configure(2) do |config|
 
   # config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.box = "centos/7"
+  config.vm.box = "geerlingguy/centos7"
   config.vm.hostname = "suma-vagrant"
   config.vm.synced_folder ".", "/vagrant", type: "sshfs"
   config.ssh.forward_agent = true
