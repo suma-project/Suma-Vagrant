@@ -32,4 +32,5 @@
     - role: geerlingguy.php
     - role: suma-ansible
     - role: rvm.ruby
+      rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
     - role: development
