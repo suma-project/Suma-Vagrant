@@ -1,3 +1,3 @@
 skip_list:
-  - '602'
-  - '204'
+  - 'yaml'
+  - 'role-name'
