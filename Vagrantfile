@@ -42,6 +42,8 @@ end
 Vagrant.configure(2) do |config|
 
   # config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  config.vbguest.installer_options = { allow_kernel_upgrade: true }
+
   config.vm.box = "geerlingguy/centos7"
   config.vm.hostname = "suma-vagrant"
   config.vm.synced_folder ".", "/vagrant", type: "sshfs"
