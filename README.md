@@ -39,6 +39,10 @@ This project includes a bash script "guest_ansible.sh" for executing development
   * npm-clean      - Clean node_modules directory
   * npm-install    - Execute npm install for analysis tools
 
+## Upgrading external Ansible roles
+
+To upgrade the external Ansible roles used for installing PHP, MySQL, Apache, and RVM, run `ansible-galaxy install -r ansible/requirements.yml -p ansible/roles/ --force`.
+
 ## NOTICE
 
 This project is not intended for production use at this time. *Please use this only for testing or development deployments*.
